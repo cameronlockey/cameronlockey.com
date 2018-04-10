@@ -30,10 +30,10 @@ rvm install 2.4.1
 rvm use 2.4.1 --default
 
 echo "Installs MySQL"
-sudo apt-get install mysql-server
-mysql_secure_installation
-systemctl status mysql.service
-apt-get install libmysqlclient-dev
+# sudo apt-get install mysql-server
+# mysql_secure_installation
+# systemctl status mysql.service
+# apt-get install libmysqlclient-dev
 
 # Create database
 # mysql -u root -p (root)
