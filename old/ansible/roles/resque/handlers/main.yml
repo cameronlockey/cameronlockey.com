@@ -1,7 +1,0 @@
----
-
-- name: restart resque-workers
-  become: true
-  become_method: sudo
-  become_user: root
-  command: restart resque-workers
