@@ -1,0 +1,34 @@
+---
+
+- name: Update composer
+  become: yes
+  become_method: sudo
+  command: composer update
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}/app"
+
+- name: Copy notify_flowdock.sh to host
+  template:
+    src: "{{ playbook_dir }}/deploy-tasks/notify_flowdock.sh"
+    dest: /usr/local/bin/notify_flowdock_deploy.sh
+    owner: ansible
+    group: devops
+    mode: 755
+
+- name: Notify Flowdock of Deployment
+  become: true
+  become_method: sudo
+  shell: /usr/local/bin/notify_flowdock_deploy.sh
+
+- name: Copy notify_datadog.sh to host
+  template:
+    src: "{{ playbook_dir }}/deploy-tasks/notify_datadog.sh"
+    dest: /usr/local/bin/notify_datadog_deploy.sh
+    owner: ansible
+    group: devops
+    mode: 755
+
+- name: Notify Datadog of Deployment
+  become: true
+  become_method: sudo
+  shell: /usr/local/bin/notify_datadog_deploy.sh

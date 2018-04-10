@@ -1,0 +1,69 @@
+---
+- name: Install Apache
+  become: yes
+  become_method: sudo
+  apt: pkg=apache2 state=latest
+
+- name: Install Apache Modules
+  shell: a2enmod "{{ item }}"
+  become: yes
+  become_method: sudo
+  notify: restart apache
+  with_items:
+    - rewrite
+    - vhost_alias
+    - headers
+    - expires
+    - filter
+    - ssl
+    - deflate
+
+# - name: Reassign apache user and group as 'site'
+#   become: yes
+#   become_method: sudo
+#   replace:
+#     dest: /etc/apache2/envvars
+#     regexp: '(www-data)'
+#     replace: 'site'
+
+- shell: apache2 -v
+  register: apache_version
+
+- name: Change default apache2.4 site
+  become: yes
+  become_method: sudo
+  template: src=vhost24.conf.tpl dest="/etc/apache2/sites-available/{{ item }}.conf"
+  notify: restart apache
+  when: (apache_version.stdout.find('Apache/2.4.') != -1) and (app.environment != "local")
+  with_items: "{{ app.servername }}"
+
+- name: Change default apache2.4 site for local
+  become: yes
+  become_method: sudo
+  template: src=vhost24_local.conf.tpl dest="/etc/apache2/sites-available/{{ item }}.conf"
+  notify: restart apache
+  when: (apache_version.stdout.find('Apache/2.4.') != -1) and (app.environment == "local")
+  with_items: "{{ app.servername }}"
+
+- name: Change APACHE_RUN_USER to {{ session.user }}
+  become: yes
+  become_method: sudo
+  replace:
+    dest: /etc/apache2/envvars
+    regexp: 'export APACHE_RUN_USER(.*)'
+    replace: 'export APACHE_RUN_USER={{ session.user }}'
+
+- name: Change APACHE_RUN_GROUP to {{ session.user }}
+  become: yes
+  become_method: sudo
+  replace:
+    dest: /etc/apache2/envvars
+    regexp: 'export APACHE_RUN_GROUP(.*)'
+    replace: 'export APACHE_RUN_GROUP={{ session.user }}'
+
+- name: Enable sites
+  become: yes
+  become_method: sudo
+  shell: "a2ensite {{ item }}.conf"
+  with_items: "{{ app.servername }}"
+  notify: restart apache

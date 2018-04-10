@@ -1,0 +1,37 @@
+#
+# Global Site Vars
+#
+site:
+  current: /var/www/{{ app.dirname }}/current
+  releases: /var/www/{{ app.dirname }}/releases
+  shared: /var/www/{{ app.dirname }}/shared
+
+#
+# Apache
+#
+apache:
+  docroot: /var/www/{{ app.dirname }}/current
+
+#
+# Users
+#
+users:
+  - username: ansible
+    name: Ansible
+    authorized_keys:
+      - "{{ ssh.public_key }}"
+    ssh_key: "{{ ssh.deploy_key }}"
+    groups: ['devops']
+    shell: /bin/bash
+  - username: site
+    name: Site
+    groups: ['devops']
+    shell: /bin/bash
+    authorized_keys:
+      - "{{ ssh.public_key }}"
+users_authorized_keys_exclusive: no
+
+#
+# Users to remove
+#
+users_remove: ['ubuntu']

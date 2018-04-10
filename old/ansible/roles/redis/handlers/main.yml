@@ -1,0 +1,15 @@
+---
+- name: start redis-server
+  become: true
+  become_method: sudo
+  command: start redis-server
+
+- name: stop redis-server
+  become: true
+  become_method: sudo
+  command: stop redis-server
+
+- name: restart redis-server
+  become: true
+  become_method: sudo
+  command: restart redis-server

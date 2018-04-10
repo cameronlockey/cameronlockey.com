@@ -1,0 +1,13 @@
+---
+app:
+  ip: 34.227.187.100
+  servername: cameronlockey.com
+  name: Cameron Lockey
+  dirname: production
+  environment: production
+session:
+  user: site
+site:
+  current: /var/www/production/current
+  releases: /var/www/production/releases
+  shared: /var/www/production/shared

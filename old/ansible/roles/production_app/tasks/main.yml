@@ -1,0 +1,78 @@
+---
+# Rocketeer Setup
+# - name: Rocketeer Setup
+  # local_action: command chdir=/Users/cameron/Sites/InFocusJobs /usr/local/bin/rocketeer setup --on={{ rocketeer.connection }} --username=rocketeer --agent=ssh --key=/Users/cameron/.ssh/id_rsa
+
+#
+# Check for the existence of the Rocketeer directories
+# Show a message if the Rocketeer files do not exist
+#
+- name: Ensure Rocketeer has been set up
+  stat:
+    path: "{{ site.shared }}"
+  register: p
+
+- name: If Rocketeer has not been setup
+  fail:
+    msg: "You need to run rocketeer setup first!"
+  when: p.stat.exists == False
+
+- name: Set permissions on the app directory
+  file:
+    path: /var/www/{{ app.dirname }}
+    group: rocketeer
+    owner: rocketeer
+    recurse: true
+
+#
+# Create the basic directory structure of the files to be shared
+#
+- name: Configure shared directory structure
+  become: true
+  become_method: sudo
+  file:
+    path: "{{ site.shared }}/{{ item }}"
+    state: directory
+    mode: 0755
+  with_items: dirs.shared
+
+- name: Create .htaccess
+  template:
+    src: htaccess.tpl
+    dest: "{{ site.shared }}/.htaccess"
+
+- name: Create site.php
+  template:
+    src: site.tpl
+    dest: "{{ site.shared }}/app/Config/site.php"
+
+- name: Create robots.txt
+  template:
+    src: robots.tpl
+    dest: "{{ site.shared }}/app/webroot/robots.txt"
+
+- name: Create temporary files directories
+  become: true
+  become_method: sudo
+  file:
+    path: "{{ site.shared }}/{{ item }}"
+    state: directory
+    mode: 0777
+    owner: site
+    group: site
+  with_items: dirs.tmp
+
+#
+# Create/Remove an initial phpinfo.php
+#
+- name: Create phpinfo.php
+  template:
+    src: phpinfo.php.tpl
+    dest: "{{ site.shared }}/app/webroot/phpinfo.php"
+  when: debug_mode == true
+
+- name: Remove phpinfo.php
+  file:
+    path: "{{ site.shared }}/app/webroot/phpinfo.php"
+    state: absent
+  when: debug_mode == false

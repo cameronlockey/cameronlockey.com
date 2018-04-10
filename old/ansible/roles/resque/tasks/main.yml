@@ -1,0 +1,13 @@
+---
+
+- name: Copy resque-worker.conf
+  template:
+    src: "{{ item }}.tpl"
+    dest: "/etc/init/{{ item }}"
+    group: root
+    owner: root
+    mode: 0644
+  # notify: restart resque-workers
+  with_items:
+    - resque-worker.conf
+    - resque-workers.conf
