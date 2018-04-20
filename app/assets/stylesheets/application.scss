@@ -19,6 +19,23 @@
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i');
 @import "vendor/rails_bootstrap_forms.scss";
 
+// Core variables and mixins
+@import "partials/variables.scss";
+@import "partials/mixins.scss";
+
+// Global CSS
+@import "partials/global.scss";
+@import "partials/spacing.scss";
+@import "partials/forms.scss";
+
+// Components
+@import "partials/masthead.scss";
+@import "partials/showcase.scss";
+@import "partials/icons.scss";
+@import "partials/testimonials.scss";
+// @import "partials/call-to-action.scss";
+@import "partials/footer.scss";
+
 /**
  * Application
  */
