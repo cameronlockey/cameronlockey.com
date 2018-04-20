@@ -48,6 +48,4 @@ test:
 #
 production:
   <<: *default
-  database: DATABASE_URL
-  username: b1ca0f23e4753b
-  password: 6be4f02e
+  url: DATABASE_URL
