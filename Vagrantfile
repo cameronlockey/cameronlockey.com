@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   # This should be something like 192.168.33.95, but unique to this app if you have multiple VMs running.
   config.vm.network :private_network, ip: "192.168.22.98"
 
-  config.vm.network :forwarded_port, guest: 3000, host: 3000    # rails
+  config.vm.network :forwarded_port, guest: 3001, host: 3001    # rails
   config.vm.network :forwarded_port, guest: 9292, host: 9292    # rack
   config.vm.network :forwarded_port, guest: 4567, host: 4567    # sinatra
   config.vm.network :forwarded_port, guest: 1080, host: 1080    # mailcatcher
