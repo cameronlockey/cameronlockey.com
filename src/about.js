@@ -9,20 +9,19 @@ const About = () => {
             <p className="py-4 mt-5">
               I am a problem solver. I love breaking down ideas and creating
               elegant, efficient solutions. I get excited about details. I enjoy
-              learning new tools and languages and want to improve as an
-              engineer. My objectives are also to grow as a leader, to serve my
-              co-workers well, and to help the company that employs me to
-              thrive.
+              learning new skills and believe I’ll always be learning and
+              growing as an engineer. My objectives are to provide for my
+              family, grow as a leader, serve my co-workers well, and to help
+              the company that employs me to thrive.
             </p>
             <p>
-              I am an accomplished software engineer with a track record of
-              delivering dependable web applications to a non-trivial user base
-              while maintaining the current codebase and server stack and
-              providing sales and marketing support to a small-but-growing
-              company. At my current post, I've solo managed and expanded all
-              aspects of a product platform from AWS provisioning and deployment
-              automation to client-side SPA development across the company’s
-              multiple brands.
+              I am an accomplished senior software engineer with a track record
+              of delivering dependable web applications and technology solutions
+              to a non-trivial user base. At my current post, I contribute
+              significantly to designing and planning product solutions for
+              internal stakeholders as well as SaaS customers. I often work
+              closely with Product teams to refine ideas and requirements and
+              often help bring them to reality by functioning as a team leader.
             </p>
           </div>
           <div className="col-12 col-sm-4">
